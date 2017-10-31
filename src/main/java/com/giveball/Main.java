@@ -38,51 +38,55 @@ import java.util.Map;
 @SpringBootApplication
 public class Main {
 
-  @Value("${spring.datasource.url}")
-  private String dbUrl;
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
 
-  @Autowired
-  private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-  public static void main(String[] args) throws Exception {
-    SpringApplication.run(Main.class, args);
-  }
-
-  @RequestMapping("/")
-  String index() {
-    return "index";
-  }
-
-  @RequestMapping("/db")
-  String db(Map<String, Object> model) {
-    try (Connection connection = dataSource.getConnection()) {
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-
-      ArrayList<String> output = new ArrayList<String>();
-      while (rs.next()) {
-        output.add("Read from DB: " + rs.getTimestamp("tick"));
-      }
-
-      model.put("records", output);
-      return "db";
-    } catch (Exception e) {
-      model.put("message", e.getMessage());
-      return "error";
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Main.class, args);
     }
-  }
 
-  @Bean
-  public DataSource dataSource() throws SQLException {
-    if (dbUrl == null || dbUrl.isEmpty()) {
-      return new HikariDataSource();
-    } else {
-      HikariConfig config = new HikariConfig();
-      config.setJdbcUrl(dbUrl);
-      return new HikariDataSource(config);
+    @RequestMapping("/")
+    String index() {
+        return "index";
     }
-  }
+
+    @RequestMapping("/db")
+    String db(Map<String, Object> model) {
+        try (Connection connection = dataSource.getConnection()) {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
+            stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
+            ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
+
+            ArrayList<String> output = new ArrayList<String>();
+            while (rs.next()) {
+                output.add("Read from DB: " + rs.getTimestamp("tick"));
+            }
+
+            model.put("records", output);
+            return "db";
+        } catch (Exception e) {
+            model.put("message", e.getMessage());
+            return "error";
+        }
+    }
+
+    @Bean
+    public DataSource dataSource() throws SQLException {
+        if (dbUrl == null || dbUrl.isEmpty()) {
+            HikariConfig config = new HikariConfig();
+            config.setUsername("gqkahfrkhbzvjl");
+            config.setPassword("a6f5a2c388ec476d0f3537ee182743768ced101896bb7072d4e18e5f3093db5f");
+            config.setJdbcUrl("jdbc:postgresql://ec2-54-83-58-17.compute-1.amazonaws.com:5432/de1s11k0hnmhni?sslmode=require");
+            return new HikariDataSource(config);
+        } else {
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl(dbUrl);
+            return new HikariDataSource(config);
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.giveball.managers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.giveball.dao.EventDao;
 import com.giveball.entities.Event;
 import com.giveball.entities.EventList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,20 @@ import java.util.List;
 public class EventManager {
     ServletContext context;
     ObjectMapper mapper;
+    EventDao eventDao;
 
     @Autowired
-    public EventManager(ServletContext context, ObjectMapper mapper) {
+    public EventManager(ServletContext context, ObjectMapper mapper, EventDao eventDao) {
         this.context = context;
         this.mapper = mapper;
+        this.eventDao = eventDao;
     }
 
     public List<Event> getUsers() {
         try {
             EventList events = mapper.readValue(new File(context.getRealPath("/events.json")), EventList.class);
+//            eventDao.getEvents();
+
 
             return events.getEvents();
 
