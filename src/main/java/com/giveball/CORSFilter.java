@@ -1,4 +1,4 @@
-package com.example;
+package com.giveball;
 
 /**
  * Created by stepan.sichkar on 6/27/2017.
