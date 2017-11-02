@@ -19,9 +19,9 @@ public class EventController {
     EventManager manager;
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public List<Event> getAllUsers() {
+    public List<Object> getAllUsers() {
 
-        List<Event> events = manager.getUsers();
+        List<Object> events = manager.getUsers();
 
         return events;
     }

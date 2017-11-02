@@ -28,7 +28,7 @@ public class EventManager {
         this.eventDao = eventDao;
     }
 
-    public List<Event> getUsers() {
+    public List<Object> getUsers() {
         try {
             EventList events = mapper.readValue(new File(context.getRealPath("/events.json")), EventList.class);
 //            eventDao.getEvents();

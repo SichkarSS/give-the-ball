@@ -4,19 +4,31 @@ package com.giveball.entities;
  * Created by stepan.sichkar on 10/31/2017.
  */
 public class Event {
-    private String id;
+    private long id;
     private String title;
     private String type;
     private String date;
-    private String allPeopleNumber;
-    private String bookedPeopleNumber;
+    private int allPeopleNumber;
+    private int bookedPeopleNumber;
     private String address;
+    private String description;
 
-    public String getId() {
+    public Event(long id, String title, String type, String date, int allPeopleNumber, int bookedPeopleNumber, String address, String description) {
+        this.id = id;
+        this.title = title;
+        this.type = type;
+        this.date = date;
+        this.allPeopleNumber = allPeopleNumber;
+        this.bookedPeopleNumber = bookedPeopleNumber;
+        this.address = address;
+        this.description = description;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -44,19 +56,19 @@ public class Event {
         this.date = date;
     }
 
-    public String getAllPeopleNumber() {
+    public int getAllPeopleNumber() {
         return allPeopleNumber;
     }
 
-    public void setAllPeopleNumber(String allPeopleNumber) {
+    public void setAllPeopleNumber(int allPeopleNumber) {
         this.allPeopleNumber = allPeopleNumber;
     }
 
-    public String getBookedPeopleNumber() {
+    public int getBookedPeopleNumber() {
         return bookedPeopleNumber;
     }
 
-    public void setBookedPeopleNumber(String bookedPeopleNumber) {
+    public void setBookedPeopleNumber(int bookedPeopleNumber) {
         this.bookedPeopleNumber = bookedPeopleNumber;
     }
 
@@ -75,6 +87,4 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    private String description;
 }
